@@ -4,7 +4,7 @@
 OS= ${shell uname}
 CC=gcc
 CXX=g++
-CXXFLAGS=-Wall -g
+CXXFLAGS=-Wall -O2
 
 # Erlang
 ERL_INCLUDE = -I/usr/local/lib/erlang/usr/include 
@@ -31,7 +31,7 @@ ALL: $(TARGET_LIB) haval.beam
 	$(CXX) $(CXXFLAGS) $(ERL_INCLUDE) $(EI_INCLUDE) -c $<
 
 haval_drv.so: haval.o haval_drv.o
-	$(CXX) -o $@ $^ $(ERL_LIBS) $(EI_LIBS) $(EXTRA_OPTIONS) -fpic -O2
+	$(CXX) -o $@ $^ $(ERL_LIBS) $(EI_LIBS) $(EXTRA_OPTIONS) -fpic
 
 clean:
 	rm -f *.beam *.o *.so *.dymlib

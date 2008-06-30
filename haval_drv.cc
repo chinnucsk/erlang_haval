@@ -111,6 +111,7 @@ static int control(ErlDrvData drv_data, unsigned int command, char *buf, int len
     }
     if(ret > 0) *rbuf = reinterpret_cast<char*>(ei_x_to_new_binary(&x_buff));
     ei_x_free(&x_buff);
+    delete[] arg1;
   } catch(std::bad_alloc) {
     erl_err_sys("can not allocate memory");
   }
