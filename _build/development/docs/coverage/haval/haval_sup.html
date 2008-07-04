@@ -1,0 +1,30 @@
+<html>
+<head><title>/Users/furutanirakuto/workspace/erlang/haval2/_build/development/docs/coverage/haval/haval_sup.html</title></head><body bgcolor=white text=black>
+<pre>
+File generated from /Users/furutanirakuto/workspace/erlang/haval2/_build/development/apps/haval-1.0.0/ebin/../src/haval_sup.erl by COVER 2008-07-04 at 05:15:58
+
+****************************************************************************
+
+        |  -module(haval_sup).
+        |  -behaviour(supervisor).
+        |  
+        |  %% API
+        |  -export([start_link/0]).
+        |  
+        |  %% Supervisor callbacks
+        |  -export([init/1]).
+        |  
+        |  %% Constnt
+        |  -define(SERVER, ?MODULE).
+        |  
+        |  start_link() -&gt;
+<font color=red>     0..|    supervisor:start_link({local, ?SERVER}, ?MODULE, []).</font>
+        |  
+        |  %% init([]) -> {ok, {SupFlags, [ChildSpec]}}
+        |  init([]) -&gt;
+<font color=red>     0..|    Child = {haval_server, {haval_server, start_link, []},</font>
+        |              permanent, 2000, worker, [haval_server]},
+<font color=red>     0..|    {ok, {{one_for_all, 10, 3600}, [Child]}}.</font>
+</pre>
+</body>
+</html>

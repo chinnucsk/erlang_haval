@@ -6,7 +6,6 @@
  */
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
 #include <new>
 #include "ei.h"
 #include "erl_driver.h"
@@ -29,10 +28,9 @@ extern "C" {
 #define DRV_HAVAL_FILE    3 
 
 /* Driver Interface Declarations */
-static ErlDrvData start_haval_driver(ErlDrvPort port, char *command);
-static void stop_haval_driver(ErlDrvData drv_data);
-static int control(ErlDrvData drv_data, unsigned int command, char *buf, 
-                    int len, char **rbuf, int rlen);
+static ErlDrvData start_haval_driver(ErlDrvPort, char *);
+static void stop_haval_driver(ErlDrvData);
+static int control(ErlDrvData, unsigned int, char*, int, char **, int);
 static void haval_to_hex(unsigned char*, char*);
 static ErlDrvBinary* ei_x_to_new_binary(const ei_x_buff*);
 

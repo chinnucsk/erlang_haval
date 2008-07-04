@@ -1,0 +1,9 @@
+-------------------------------------
+HAVAL bindings for Erlang.
+
+version:  1.0.0
+author:   Rakuto Furutani <xri://=rakuto/(+profile)>
+-------------------------------------
+
+HAVAL is fast one-way hasing algorithm, 
+see <http://labs.calyptix.com/haval.php> for more details.

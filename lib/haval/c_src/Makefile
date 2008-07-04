@@ -1,10 +1,10 @@
 .PHONY: clean
-.SUFFIXES: .o .c .cc .erl .beam
+.SUFFIXES: .o .c .cc
 
 OS= ${shell uname}
 CC=gcc
 CXX=g++
-CXXFLAGS=-Wall -O2
+CXXFLAGS=-Wall -g
 
 # Erlang
 ERL_INCLUDE = -I/usr/local/lib/erlang/usr/include 
@@ -19,10 +19,7 @@ TARGET_LIB = haval_drv.so
 ifeq ($(OS), Darwin)
   EXTRA_OPTIONS = -fno-common -bundle -undefined suppress -flat_namespace
 endif
-ALL: $(TARGET_LIB) haval.beam
-
-.erl.beam:
-	erlc -W -Ddebug $<
+ALL: $(TARGET_LIB)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
@@ -31,7 +28,8 @@ ALL: $(TARGET_LIB) haval.beam
 	$(CXX) $(CXXFLAGS) $(ERL_INCLUDE) $(EI_INCLUDE) -c $<
 
 haval_drv.so: haval.o haval_drv.o
-	$(CXX) -o $@ $^ $(ERL_LIBS) $(EI_LIBS) $(EXTRA_OPTIONS) -fpic
+	$(CXX) -o $@ $^ $(ERL_LIBS) $(EI_LIBS) $(EXTRA_OPTIONS) -fpic -O2
+	mv haval_drv.so ../priv/lib 
 
 clean:
-	rm -f *.beam *.o *.so *.dymlib
+	rm -f *.o *.so

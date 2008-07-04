@@ -1,0 +1,99 @@
+<html>
+<head><title>/Users/furutanirakuto/workspace/erlang/haval2/_build/development/docs/coverage/haval/haval_server.html</title></head><body bgcolor=white text=black>
+<pre>
+File generated from /Users/furutanirakuto/workspace/erlang/haval2/_build/development/apps/haval-1.0.0/ebin/../src/haval_server.erl by COVER 2008-07-04 at 05:15:58
+
+****************************************************************************
+
+        |  %%% -----------------------------------------------------------------
+        |  %%% @doc  HAVAL bindings for Erlang
+        |  %%% @end
+        |  %%% -----------------------------------------------------------------
+        |  -module(haval_server).
+        |  
+        |  -behaviour(gen_server).
+        |  
+        |  %% API
+        |  -export([start_link/0]).
+        |  
+        |  %% gen_server callbacks
+        |  -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
+        |           terminate/2, code_change/3]).
+        |  
+        |  %% Constant
+        |  -define(SERVER, ?MODULE).
+        |  
+        |  %% ================================================================
+        |  %% API
+        |  %% ================================================================
+        |  %% ----------------------------------------------------------------
+        |  %% Func:  start_link() -> {ok, Pid} | ignore | {error, Error}
+        |  %% Desc:  Starts the server
+        |  %% ----------------------------------------------------------------
+        |  start_link() -&gt;
+<font color=red>     0..|    gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).</font>
+        |  
+        |  %% ================================================================
+        |  %% gen_server callbacks
+        |  %% ================================================================
+        |  
+        |  %% ----------------------------------------------------------------
+        |  %% Func:  init(Args) -> {ok, State} }
+        |  %%                      {ok, State, Timeout} |
+        |  %%                      ignore |
+        |  %%                      {stop, Reason}
+        |  %%
+        |  %% Desc:  Initiates the server
+        |  %% ----------------------------------------------------------------
+        |  
+        |  init([]) -&gt; 
+<font color=red>     0..|    process_flag(trap_exit, true),</font>
+<font color=red>     0..|    erl_ddll:start(),</font>
+<font color=red>     0..|    PrivDir = code:priv_dir(haval),</font>
+<font color=red>     0..|    LibDir = filename:join([PrivDir, "lib"]),</font>
+<font color=red>     0..|    case erl_ddll:load_driver(LibDir, haval_drv) of</font>
+<font color=red>     0..|      ok -&gt; ok;</font>
+<font color=red>     0..|      {error, already_loaded} -&gt; ok;</font>
+<font color=red>     0..|      _ -&gt; exit({error, could_not_load_driver})</font>
+        |    end,
+<font color=red>     0..|    register_lib(haval_drv),</font>
+<font color=red>     0..|    {ok, []}.</font>
+        |  
+        |  
+        |  %% ----------------------------------------------------------------
+        |  %% The gen_server callback functions
+        |  %% ----------------------------------------------------------------
+        |  handle_call(_, _, State) -&gt;
+<font color=red>     0..|    {noreply, State}.</font>
+        |  
+        |  handle_cast(_, State) -&gt;
+<font color=red>     0..|    {noreply, State}.</font>
+        |  
+        |  handle_info(_INfo, State) -&gt;
+<font color=red>     0..|    {noreply, State}.</font>
+        |  
+        |  code_change(_OldVsn, State, _Extra) -&gt;
+<font color=red>     0..|    {ok, State}.</font>
+        |  
+        |  terminate(_Reason, {Port, _}) -&gt;
+<font color=red>     0..|    Port ! {close, self()},</font>
+<font color=red>     0..|    ok.</font>
+        |    
+        |  
+        |  %% ----------------------------------------------------------------
+        |  %% Internal functions
+        |  %% ----------------------------------------------------------------
+        |  register_lib(SharedLib) -&gt;
+<font color=red>     0..|    Port  = open_port({spawn, SharedLib}, []),</font>
+        |    %% Register a port in ets
+<font color=red>     0..|    case catch port_control(Port, 0, []) of </font>
+        |      {'EXIT', _} -&gt;
+<font color=red>     0..|        {stop, nodriver};</font>
+        |      _ -&gt;
+<font color=red>     0..|        Tab = ets:new(haval_server_table, [set, protected, named_table]),</font>
+<font color=red>     0..|        ets:insert(Tab, {port, Port}),</font>
+<font color=red>     0..|        {ok, {Port, []}}</font>
+        |    end.
+</pre>
+</body>
+</html>
